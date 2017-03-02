@@ -13,36 +13,43 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 // });
 
 $app->get('/photo', function(Silex\Application $app)  {
-    //$data = $app['db']->fetchAssoc("SELECT * FROM bc_test");
-
-    $data = 'Hey backend folks, data here';
+    $photo = '';
+    $stories = '';
 
     /*
       Include:
+
+      This is a dynamic route to a details of a historical photos
+
+      pass in:
+      - title
+      - image_url
+      - coordinates (location)
+      - stories: [] (array of stories include: image_url and text)
     */
 
     return $app['twig']->render('layouts/photo.twig', array(
-      '' => $data,
+      'photo' => $photo,
+      'stories' => $stories
     ));
 });
 
 $app->get('/', function(Silex\Application $app)  {
-    //$data = $app['db']->fetchAssoc("SELECT * FROM bc_test");
-
-    $data = 'Hey backend folks, data here';
+    $photos = '';
 
     /*
-      Include:
+      Include array of historical images:
 
       - title
       - image_url
       - detail_view_url
+      - coordinates
       - number_of_stories
       - number_of_pictures
     */
 
     return $app['twig']->render('layouts/browse.twig', array(
-      'photos' => $data,
+      'photos' => $photos,
     ));
 });
 
@@ -50,6 +57,15 @@ $app->get('/', function(Silex\Application $app)  {
 // totally hacking
 $app->get('/camera', function() use ($app) {
     return $app['twig']->render('camera/form.twig');
+    /*
+      Creates a story with image and text associated with a historical image
+
+      Save:
+        - image (optional)
+        - quote_text (optional)
+
+      Note: requires at least one of the two^
+    */
 });
 
 $app->post('/upload', 'App\Controller\UploadController::saveAction');
