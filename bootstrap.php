@@ -19,7 +19,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'dbname' => 'dlxs',
         'host' => $mysql_host,
         'user' => 'dlxs',
-        'password' => 'getyer0wn'
+        'password' => 'xxxxx'
     )
 ));
 
