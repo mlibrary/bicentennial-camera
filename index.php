@@ -8,9 +8,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/views',
 ));
 
-$app['upload.controller'] = $app->share(function() use ($app) {
-    return new DLXS\Controller\UploadController();
-});
+// $app['upload.controller'] = $app->share(function() use ($app) {
+//     return new DLXS\Controller\UploadController();
+// });
 
 $app->get('/info', function(Silex\Application $app)  {
     $output = "<p>Hello, world</p>";
@@ -25,7 +25,7 @@ $app->get('/camera', function() use ($app) {
     return $app['twig']->render('camera/form.twig');
 });
 
-$app->post('/upload', 'upload.controller:saveAction');
+$app->post('/upload', 'App\Controller\UploadController::saveAction');
 
 // $app->post('/upload', function(Request $request) use ($app) {
 //     $data_js = $request->get('imgBase64');
