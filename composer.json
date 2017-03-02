@@ -1,5 +1,7 @@
 {
     "require": {
-        "silex/silex": "~2.0"
+        "silex/silex": "~2.0",
+        "doctrine/dbal": "v2.5.5",
+        "twig/twig": "~1.0"
     }
 }

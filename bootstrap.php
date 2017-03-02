@@ -8,18 +8,15 @@ $loader->add('App', __DIR__);
 $app = new Silex\Application();
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
-$mysql_host = 'mysql-quod';
-if ( $_SERVER['HTTP_HOST'] == 'beta1.quod.lib.umich.edu' ) {
-  $mysql_host = 'mysql-quod-dev';
-  $_SERVER['DLXSDATAROOT'] = '/l1/dev/beta1';
-}
+$config = parse_ini_file(__DIR__ .'/vendor/database.ini');
+
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver' => 'pdo_mysql',
-        'dbname' => 'dlxs',
-        'host' => $mysql_host,
-        'user' => 'dlxs',
-        'password' => 'xxxxx'
+        'dbname' => $config['dbname'],
+        'host' => $config['host'],
+        'user' => $config['user'],
+        'password' => array_key_exists('password', $config) ? $config['password'] : null
     )
 ));
 
