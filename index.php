@@ -8,7 +8,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/info', function(Silex\Application $app)  {
     $output = "<p>Hello, world</p>";
-    $data = $app['db']->fetchAssoc("SELECT * FROM test");
+    $data = $app['db']->fetchAssoc("SELECT * FROM bc_test");
     $output .= "<pre>" . print_r($data, true) . "</pre>";
     return $output;
 });
