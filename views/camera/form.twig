@@ -1,4 +1,4 @@
-{% extends "layouts/application.twig" %}
+{% extends "layouts/base.twig" %}
 
 {% block title %}CAMERA{% endblock %}
 {% block styles %}
@@ -48,7 +48,7 @@ canvas {
 
 <script type="text/javascript">
 // ** Capture a still image **
-// This block of code is contained in a self invoked function. 
+// This block of code is contained in a self invoked function.
 
 (function() {
     // Set a width and height for the video/image
@@ -75,7 +75,7 @@ canvas {
     // ****************************************************************
     // Start capturing video
     function startup() {
-        // Define elements 
+        // Define elements
         video = document.getElementById('video-still');
         canvas = document.getElementById('canvas');
         photo = document.getElementById('photo');
@@ -86,30 +86,30 @@ canvas {
         // width = $(video).width();
         height = video.clientHeight;
         width = height / ( 3 / 4);
-        
+
         // Check for vendor version of getUserMedia
-        
+
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
-        
+
         // Check for getUserMedia
         if (!navigator.getMedia) {
             // No user media exit
             console.log("Has get user media");
-            return; 
+            return;
         }
-        
-        // invoke getUserMedia to start a video stream. 
+
+        // invoke getUserMedia to start a video stream.
         navigator.getMedia({
             video: true,    // Get video
             audio: false    // No audio
         }, getMediaSuccess, getMediaError); // Pass a success, and error function
-        
+
         // Media success function
         function getMediaSuccess(stream) {
-            // Check for FireFox. 
+            // Check for FireFox.
             if (navigator.mozGetUserMedia) {
                 video.mozSrcObject = stream; // Assign the stream to #video-still
             } else {
@@ -119,15 +119,15 @@ canvas {
             video.play(); // Tell #video-still to play
         }
 
-        // This is invoked on a user media error. 
+        // This is invoked on a user media error.
         function getMediaError(error) {
             console.log("An error occured! " + error);
         }
 
-        // Add an event to the #video-still. The canplay event occurs when 
-        // the video is ready to play. 
+        // Add an event to the #video-still. The canplay event occurs when
+        // the video is ready to play.
         video.addEventListener('canplay', function (event) {
-            // Check the streaming flag. 
+            // Check the streaming flag.
             if (!streaming) {
                 // Not streaming.
                 // Get the height of the video
@@ -141,7 +141,6 @@ canvas {
                 // }
 
                //  height = width / ( 4 / 3);
-                
                 // Set some attributes of the #video-still element
                 video.setAttribute('width', width);
                 video.setAttribute('height', height);
@@ -181,9 +180,9 @@ canvas {
     // End startup function
     // ****************************************************************
 
-    
-    // #canvas is used to hold a still image. Here the convas is cleared 
-    // by filling with gray. 
+
+    // #canvas is used to hold a still image. Here the convas is cleared
+    // by filling with gray.
     function clearphoto() {
         // Fill with a gray
         var context = canvas.getContext('2d');
@@ -199,8 +198,8 @@ canvas {
     // format data URL. By drawing it on an offscreen canvas and then
     // drawing that to the screen, we can change its size and/or apply
     // other changes before drawing it.
-    
-    // Capture an image. 
+
+    // Capture an image.
 
     function takepicture() {
         var context = canvas.getContext('2d');
