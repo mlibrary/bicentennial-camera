@@ -31,12 +31,15 @@ $app->get('/', function(Silex\Application $app)  {
 
     $data = 'Hey backend folks, data here';
 
+    $sql = "SELECT title, image_href, record_href, ( SELECT COUNT(*) FROM bc_story_item b WHERE b.historical_item_id = a.id AND b.image_filename IS NULL) AS number_of_stories, ( SELECT COUNT(*) FROM bc_story_item c WHERE c.historical_item_id = a.id AND c.image_filename IS NOT NULL) AS number_of_pictures FROM bc_historical_item a";
+    $data = $app['db']->fetchAssoc($sql);
+
     /*
       Include:
 
       - title
-      - image_url
-      - detail_view_url
+      - image_href
+      - record_href
       - number_of_stories
       - number_of_pictures
     */
