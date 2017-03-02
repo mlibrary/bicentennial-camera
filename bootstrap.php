@@ -8,6 +8,8 @@ $loader->add('App', __DIR__);
 $app = new Silex\Application();
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
+$app['__ROOT__'] = __DIR__;
+
 $config = parse_ini_file(__DIR__ .'/vendor/database.ini');
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
