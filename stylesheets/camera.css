@@ -1,0 +1,47 @@
+.take-photo-view {
+    position: relative;
+}
+
+/*.take-photo-view::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+*/
+#video-still {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+}
+
+#overlay-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*max-height: 100%;*/
+}
+
+#photo {
+    position: absolute;
+    /*opacity: 0.8;*/
+    top: 0;
+    left: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
+}
+
+canvas {
+    display: none;
+}
