@@ -466,6 +466,12 @@ nav {
   .logo-block-m {
     padding-right: 0.8rem; } }
 
+@media (max-width: 25em) {
+  .logo-library {
+    display: none !important; }
+  .logo-block-m {
+    border-right: solid 1px rgba(255, 255, 255, 0.5); } }
+
 footer {
   background: #00274C;
   padding: 2rem 0;
@@ -548,7 +554,7 @@ footer {
       width: 100%; } }
 
 .historical-photo-camera {
-  margin-top: 1rem; }
+  margin-top: 0; }
 
 .historical-photo-container {
   margin-bottom: 1rem;
@@ -625,7 +631,8 @@ footer {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.36);
   width: 100%;
   margin-bottom: 2rem;
-  min-height: 60vh; }
+  height: 50vh;
+  min-height: 20rem; }
 
 .story-textarea {
   margin-top: 0; }
