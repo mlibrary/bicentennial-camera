@@ -61,7 +61,7 @@ $app->get('/', function(Silex\Application $app)  {
 $app->get('/camera/{id}', function($id) use ($app) {
     $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat FROM bc_historical_item");
 
-    return $app['twig']->render('camera/form.twig', array(
+    return $app['twig']->render('layouts/camera.twig', array(
         'photo' => $photo
     ));
     /*

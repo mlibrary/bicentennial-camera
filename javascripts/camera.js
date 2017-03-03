@@ -25,6 +25,7 @@
     var startbutton = null;
     var savebutton = null;
     var retakebutton = null;
+    var $frame;
 
     var position = null;
 
@@ -43,11 +44,13 @@
         startbutton = document.getElementById('startbutton');
         savebutton = document.getElementById('save-photo');
         retakebutton = document.getElementById('retake-photo');
-        $overlay = $("img.overlay-photo");
+        overlay = document.getElementById('overlay-photo');
+        $frame = $(".take-photo-view")
 
 
         width = $(video).width();
-        height = $("img.overlay-photo").height();
+        height = $(overlay).height();
+        $(overlay).parent().height(height);
         // height = video.clientHeight;
         // width = height / ( 3 / 4);
 
@@ -169,7 +172,9 @@
         if ( initialized ) {
             $(".toolbar").toggleClass('hidden');
             $(photo).toggleClass('invisible');
-            $(video).toggleClass('invisible');        
+            $(video).toggleClass('invisible');
+            $(overlay).toggleClass('hidden');
+            $frame.height($(overlay).height()).css('min-height', '');
         } else {
             initialized  = true;
         }
@@ -194,7 +199,11 @@
             photo.setAttribute('src', data);
             $(photo).toggleClass('invisible');
             $(video).toggleClass('invisible');
-            $(".toolbar").toggleClass("hidden");
+            $(overlay).toggleClass('hidden');
+            setTimeout(function() {
+                $frame.height($(photo).height()).css('min-height', 0);
+                $(".toolbar").toggleClass("hidden");
+            })
         } else {
             clearphoto();
         }
