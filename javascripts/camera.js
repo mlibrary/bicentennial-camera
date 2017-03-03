@@ -26,6 +26,7 @@
     var savebutton = null;
     var retakebutton = null;
     var $frame;
+    var $slider;
 
     var position = null;
 
@@ -46,6 +47,8 @@
         retakebutton = document.getElementById('retake-photo');
         overlay = document.getElementById('overlay-photo');
         $frame = $(".take-photo-view")
+        $slider = $("#adjust-opacity");
+
 
 
         width = $(video).width();
@@ -55,6 +58,15 @@
         // width = height / ( 3 / 4);
 
         // Check for vendor version of getUserMedia
+
+        $slider.rangeslider({ polyfill: false }).val($(video).css('opacity') * 100.0).change();
+
+
+        $slider.on('change', function() {
+            var opacity = $(this).val() / 100.0;
+            $(video).css({ opacity: opacity });
+        })
+
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -208,6 +220,7 @@
             clearphoto();
         }
     }
+
 
     // Set up our event listener to run the startup process
     // once loading is complete.

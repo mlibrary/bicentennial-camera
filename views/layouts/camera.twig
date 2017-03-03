@@ -2,6 +2,10 @@
 
 {% block head %}
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<script type="text/javascript" src="/bicentennial-camera/javascripts/rangeslider.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/bicentennial-camera/stylesheets/rangeslider.css" />
+
 <link rel="stylesheet" type="text/css" href="/bicentennial-camera/stylesheets/camera.css" />
 {% endblock %}
 
@@ -18,6 +22,9 @@
 
       <!-- step 1 -->
       <div class="toolbar">
+        <div style="margin-bottom: 1rem">
+          <input id="adjust-opacity" type="range" min="0" max="100" step="10" data-rangeslider />
+        </div>
         <button class="button" id="startbutton">
           <svg width="1rem" height="1rem" viewBox="0 0 70 63" version="1.1" xmlns="http://www.w3.org/2000/svg"
           style="display: inline-block; margin-bottom: -.1rem;margin-right: 0.5rem;" xmlns:xlink="http://www.w3.org/1999/xlink">

@@ -8,6 +8,8 @@
     clear: both;
 }
 */
+
+
 #video-still {
     width: 100%;
     position: absolute;
@@ -44,4 +46,8 @@ img {
 
 canvas {
     display: none;
+}
+
+.rangeslider__fill {
+    background-color: #126dc1;
 }
