@@ -1,22 +1,15 @@
 {% extends "layouts/base.twig" %}
 
 {% block main %}
-  <div class="container container-narrow">
-    <h1>Discover
-
-      <svg width="1.5rem" height="1.5rem" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="Hackathon---Home-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g id="Discover-by-Location-page" transform="translate(-537.000000, -119.000000)" fill="#4E4E4E">
-                <g id="compass-outline-copy" transform="translate(537.000000, 119.000000)">
-                    <path d="M17.5,52.5 L28.7,28.7 L52.5,17.5 L41.3,41.3 L17.5,52.5 L17.5,52.5 Z M35,31.85 C33.26015,31.85 31.85,33.26015 31.85,35 C31.85,36.73985 33.26015,38.15 35,38.15 C36.73985,38.15 38.15,36.73985 38.15,35 C38.15,33.26015 36.73985,31.85 35,31.85 L35,31.85 Z M35,3.5e-05 C54.3298,3.5e-05 70,15.670025 70,35 C70,54.3298 54.3298,70 35,70 C15.670025,70 0,54.3298 0,35 C0,15.670025 15.670025,3.5e-05 35,3.5e-05 L35,3.5e-05 Z M35,7 C19.53602,7 7,19.53602 7,35 C7,50.46405 19.53602,63 35,63 C50.46405,63 63,50.46405 63,35 C63,19.53602 50.46405,7 35,7 L35,7 Z" id="Shape"></path>
-                </g>
-            </g>
-          </g>
-      </svg>
-    </h1>
-    <p style="font-size: 1.1rem;"><b>Discover</b> people, places and things in our historical photo gallery.</p>
+<section class="header-background-image page-header">
+  <div class="container page-header-content container-medium">
+    <h1 class="page-heading">Discover</h1>
+    <p class="page-subheading"><b>Discover</b> people, places and things in our historical photo gallery.</p>
   </div>
+</section>
 
+<div class="container page-header-content container-medium">
+  <h2 class="gallery-heading">Gallery</h2>
   <ul class="historical-photos-list">
   {% for photo in photos %}
     <li class="historical-photo-list-item">
@@ -30,4 +23,5 @@
     </li>
    {% endfor %}
   </ul>
+</div>
 {% endblock %}
