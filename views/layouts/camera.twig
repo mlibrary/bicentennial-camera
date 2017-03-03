@@ -1,0 +1,28 @@
+{% extends "layouts/base.twig" %}
+
+{% block main %}
+  <div class="historical-photo-container">
+    <div class="container container-narrow take-photo-container">
+      <h1>Recreate</h1>
+
+      <div class="take-photo-view">
+      </div>
+
+      <!-- step 1 -->
+      <button class="button">Capture bicentennial photo</button>
+      <!-- end of step 1 -->
+
+      <!-- step 2, only display at step 2-->
+      <div>
+        <button class="button button-light">Retake bicentennial photo</button>
+
+        <label>Add your story
+        <textarea class="story-textarea"></textarea>
+        </label>
+        <button class="button share-button">Connect and share</button>
+      </div>
+      <!-- end of step 2 -->
+
+    </div>
+  </div>
+{% endblock %}
