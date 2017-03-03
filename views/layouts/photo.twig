@@ -59,6 +59,11 @@
 <div class="map-container" style="padding: 4rem 0;">
   <div class="container container-narrow">
     <section>
+
+      <pre>
+        {{ dump(photo) }}
+      </pre>
+
       <div id="map" style="border: solid 2px #CCC;"></div>
       <style>
          #map {
@@ -67,13 +72,11 @@
          }
       </style>
       <script>
-        /*
         var loc_lat = {{ photo.loc_lat }}
         var loc_long = {{ photo.loc_long }}
-        */
 
         function initMap() {
-          var uluru = {lat: 42.279680, lng: -83.732296};
+          var uluru = {lat: loc_lat, lng: loc_long};
           var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16,
             center: uluru
