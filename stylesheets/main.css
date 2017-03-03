@@ -54,7 +54,7 @@ html {
   box-sizing: inherit; }
 
 .site-min-width {
-  min-width: 20rem; }
+  min-width: 28rem; }
 
 .container {
   margin: 0 auto;
@@ -537,7 +537,18 @@ footer {
 .historical-photo-list-item {
   margin: 0.5rem;
   padding: 0;
-  width: 30vw; }
+  width: 30vw;
+  text-align: center;
+  margin-bottom: 2rem; }
+  @media (max-width: 50rem) {
+    .historical-photo-list-item {
+      width: 45vw; } }
+  @media (max-width: 30rem) {
+    .historical-photo-list-item {
+      width: 100%; } }
+
+.historical-photo-camera {
+  margin-top: 1rem; }
 
 .historical-photo-container {
   margin-bottom: 1rem;
