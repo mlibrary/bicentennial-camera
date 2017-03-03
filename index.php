@@ -14,7 +14,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/photo/{id}', function(Silex\Application $app, $id)  {
 
-    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat FROM bc_historical_item WHERE id = ?", array($id));
+    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, date, record_href, loc_long, loc_lat FROM bc_historical_item WHERE id = ?", array($id));
     $stories = $app['db']->fetchAll("SELECT id, image_filename, description, date_added FROM bc_story_item WHERE historical_item_id = ?", array($photo['id']));
 
     /*
