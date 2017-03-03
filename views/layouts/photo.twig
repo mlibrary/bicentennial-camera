@@ -2,55 +2,92 @@
 
 {% block main %}
 <div class="historical-photo-container">
-<div class="container container-narrow">
-  <h1 class="historical-photo-heading">An art class in the Quadrangle of the Lawyer's Club</h1>
-  <img src="{{ photo.image_href }}/full/,500/0/default.png" class="historical-photo" />
+  <div class="container container-narrow">
+    <h1 class="historical-photo-heading">{{ photo.title }}</h1>
+    <img src="{{ photo.image_href }}/full/,500/0/default.png" class="historical-photo" />
 
-  <div class="share-story-container">
-    <button class="button">Take your own photo</button><button class="button button-light">See it on the map</button>
+    <div class="share-story-container">
+      <a href="" class="button">Take your own photo</a><a href="#map" class="button button-light">See it on the map</a>
+    </div>
   </div>
-</div>
 </div>
 
 <div class="stories-container">
-<div class="container container-narrow">
-  <h2 class="stories-heading">Your Stories &amp; Pictures</h2>
-  <div class="divider"></div>
+  <div class="container container-narrow">
+    <section>
+      <h2 class="stories-heading">Your Stories &amp; Pictures</h2>
+      <div class="divider"></div>
 
-  <ul class="stories-list">
-    <li class="story-card">
-      <img src="historical_photos/bhl_bl000002_full_1073_736__0_default.jpg" class="story-photo" />
+      {% if stories is empty %}
+        <p style="text-align: center; margin-bottom: 1rem; margin-top: 0;">No stories yet.</p>
+        <p style="text-align: center; margin-bottom: 2rem;"><a href="" class="button">Add yours</a></p>
+      {% endif %}
 
-      <blockquote class="story-quote">
-        <svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.149999991">
-                <g id="BC-App" transform="translate(-433.000000, -1324.000000)" fill="#000000">
-                    <path d="M451,1344 L457,1344 L461,1336 L461,1324 L449,1324 L449,1336 L455,1336 L451,1344 Z M435,1344 L441,1344 L445,1336 L445,1324 L433,1324 L433,1336 L439,1336 L435,1344 L435,1344 Z" id="Shape-Copy" transform="translate(447.000000, 1334.000000) rotate(-180.000000) translate(-447.000000, -1334.000000) "></path>
+      <ul class="stories-list">
+      {% for story in stories %}
+        <li class="story-card">
+          <img src="{{ story.image_filename }}" class="story-photo" />
+
+          <blockquote class="story-quote">
+            <svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.149999991">
+                    <g id="BC-App" transform="translate(-433.000000, -1324.000000)" fill="#000000">
+                        <path d="M451,1344 L457,1344 L461,1336 L461,1324 L449,1324 L449,1336 L455,1336 L451,1344 Z M435,1344 L441,1344 L445,1336 L445,1324 L433,1324 L433,1336 L439,1336 L435,1344 L435,1344 Z" id="Shape-Copy" transform="translate(447.000000, 1334.000000) rotate(-180.000000) translate(-447.000000, -1334.000000) "></path>
+                    </g>
                 </g>
-            </g>
-        </svg>
+            </svg>
 
-        <p class="story-quote-text">
-          The U-M image collections has hundreds of images featuring ann arbor and university history. Although the images are discoverable through library websites, but there is no opportunity to engage with these historical images resulting in a static look and feel to the collections.
-        </p>
+            <p class="story-quote-text">
+              {{ story.description }}
+            </p>
 
-        <svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.149999991">
-                <g id="BC-App" transform="translate(-979.000000, -1406.000000)" fill="#000000">
-                    <path d="M997,1426 L1003,1426 L1007,1418 L1007,1406 L995,1406 L995,1418 L1001,1418 L997,1426 Z M981,1426 L987,1426 L991,1418 L991,1406 L979,1406 L979,1418 L985,1418 L981,1426 L981,1426 Z" id="Shape"></path>
+            <svg width="28px" height="20px" viewBox="0 0 28 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.149999991">
+                    <g id="BC-App" transform="translate(-979.000000, -1406.000000)" fill="#000000">
+                        <path d="M997,1426 L1003,1426 L1007,1418 L1007,1406 L995,1406 L995,1418 L1001,1418 L997,1426 Z M981,1426 L987,1426 L991,1418 L991,1406 L979,1406 L979,1418 L985,1418 L981,1426 L981,1426 Z" id="Shape"></path>
+                    </g>
                 </g>
-            </g>
-        </svg>
-      </blockquote>
-      <p class="quote-author">~ Jessica Jobes</p>
-    </li>
-    <li class="story-card">
-      <img src="historical_photos/bhl_bl000002_full_1073_736__0_default.jpg" class="story-photo" />
-    </li>
-    <li class="story-card">
-      <img src="historical_photos/bhl_bl000002_full_1073_736__0_default.jpg" class="story-photo" />
-    </li>
-  </ul>
+            </svg>
+          </blockquote>
+        </li>
+      {% endfor %}
+      </ul>
+    </section>
+  </div>
 </div>
+
+<div class="map-container" style="padding: 4rem 0;">
+  <div class="container container-narrow">
+    <section>
+      <div id="map" style="border: solid 2px #CCC;"></div>
+      <style>
+         #map {
+          height: 20rem;
+          width: 100%;
+         }
+      </style>
+      <script>
+        /*
+        var loc_lat = {{ photo.loc_lat }}
+        var loc_long = {{ photo.loc_long }}
+        */
+
+        function initMap() {
+          var uluru = {lat: 42.279680, lng: -83.732296};
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: uluru
+          });
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+          });
+        }
+      </script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvega-JI5Pt2no31ll1mSomiLY_krEVDI&callback=initMap">
+      </script>
+    </section>
+  </div>
 </div>
 {% endblock %}
