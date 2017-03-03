@@ -532,19 +532,20 @@ footer {
   margin: 2rem 0; }
 
 .historical-photos-list {
-  margin: 2rem 0.5rem;
   padding: 0;
+  margin: 0;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center; }
+  justify-content: space-between;
+  align-items: top; }
 
 .historical-photo-list-item {
-  margin: 0.5rem;
+  margin: 0;
   padding: 0;
-  width: 30vw;
+  width: 30%;
   text-align: center;
+  margin: 2rem 0;
   margin-bottom: 2rem; }
   @media (max-width: 50rem) {
     .historical-photo-list-item {
@@ -557,7 +558,7 @@ footer {
   margin-top: 0; }
 
 .historical-photo-container {
-  margin-bottom: 1rem;
+  margin-bottom: 4rem;
   margin-top: 1rem; }
 
 .historical-photo {
@@ -642,3 +643,32 @@ footer {
 
 .story-textarea {
   width: 100%; }
+
+.page-header {
+  min-height: 20rem; }
+
+.page-header-content {
+  padding: 2rem; }
+
+.header-background-image {
+  background: url("http://localhost:3000/header.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover; }
+
+.page-heading {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: 300;
+  text-shadow: 1px 1px rgba(45, 37, 33, 0.9); }
+
+.page-subheading {
+  color: white;
+  font-weight: 300;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px rgba(45, 37, 33, 0.9); }
+
+.gallery-heading {
+  border-bottom: solid 2px #CCC;
+  padding-bottom: 1rem;
+  max-width: 20rem; }
