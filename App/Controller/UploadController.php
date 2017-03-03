@@ -16,12 +16,14 @@ class UploadController {
         $loc_lat = $request->get('loc_lat');
         $description = $request->get('description');
 
+        $remote_user = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : 'anonymous';
+
         $image_filename = sprintf("%s", uniqid()) . ".jpg";
 
         file_put_contents($app['__ROOT__'] . '/files/' . $image_filename, $data);
 
-        $app['db']->executeQuery("INSERT INTO bc_story_item ( image_filename, description, loc_lat, loc_long, historical_item_id, date_added ) VALUES ( ?, ?, ?, ?, ?, NOW() )", 
-                array($image_filename, $description, $loc_lat, $loc_long, $id));
+        $app['db']->executeQuery("INSERT INTO bc_story_item ( image_filename, description, loc_lat, loc_long, historical_item_id, user, date_added ) VALUES ( ?, ?, ?, ?, ?, ?, NOW() )", 
+                array($image_filename, $description, $loc_lat, $loc_long, $id, $remote_user));
 
         $story_id = $app['db']->lastInsertId();
 
