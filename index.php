@@ -12,9 +12,10 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 //     return new DLXS\Controller\UploadController();
 // });
 
-$app->get('/photo', function(Silex\Application $app)  {
-    $photo = '';
-    $stories = '';
+$app->get('/photo/{id}', function(Silex\Application $app, $id)  {
+
+    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat");
+    $stories = $app['db']->fetchAll("SELECT id, image_filename, description, date_added FROM bc_story_item WHERE historical_item_id = ?", array($photo['id']));
 
     /*
       Include:
@@ -38,7 +39,7 @@ $app->get('/', function(Silex\Application $app)  {
     $photos = '';
 
     $sql = "SELECT title, image_href, record_href, ( SELECT COUNT(*) FROM bc_story_item b WHERE b.historical_item_id = a.id AND b.image_filename IS NULL) AS number_of_stories, ( SELECT COUNT(*) FROM bc_story_item c WHERE c.historical_item_id = a.id AND c.image_filename IS NOT NULL) AS number_of_pictures FROM bc_historical_item a";
-    $data = $app['db']->fetchAssoc($sql);
+    $photos = $app['db']->fetchAll($sql);
 
     /*
       Include array of historical images:

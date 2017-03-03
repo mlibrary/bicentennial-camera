@@ -2,11 +2,15 @@
 
 {% block main %}
   <ul class="historical-photos-list">
+  {% for photo in photos %}
     <li class="historical-photo-list-item">
       <!--
       <img src="historical_photos/bhl_bl000002_full_1073_736__0_default.jpg" class="historical-photo" />
       <a href="" class="button">Bicentennial Camera</a>
       -->
+      <img src="{{ photo.image_href }}/full/!500,500/0/default.jpg" class="historical-photo" />
+      <a href="" class="button">Bicentennial Camera</a>
     </li>
+   {% endfor %}
   </ul>
 {% endblock %}
