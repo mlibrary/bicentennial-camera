@@ -1,19 +1,66 @@
 {% extends "layouts/base.twig" %}
 
 {% block title %}CAMERA{% endblock %}
-{% block styles %}
+{% block head %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <style type="text/css">
+
+header {
+    display: none;
+}
+
+.camera {
+    width: 100vw;
+    /*height: 100vh;*/
+    position: relative;
+}
+
 video {
     width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+}
+
+img.overlay-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*max-height: 100%;*/
+}
+
+#photo {
+    position: fixed;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.toolbar {
+    font-size: 24px;
+    position: fixed;
+    top: 10px;
+    right: 10px;    
+    z-index: 1000;
 }
 
 button {
-    font-size: 48px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
     padding: 10px;
-    z-index: 1000;
+    display: block;
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden !important;
 }
 
 .output {
@@ -32,18 +79,20 @@ canvas {
 </style>
 {% endblock %}
 
-{% block content %}
-<div class="input">
+{% block main %}
+<div class="camera">
+    <img class="overlay-photo" src="{{ photo.image_href }}/full/full/0/default.jpg" />
+    <video id="video-still"></video>
+    <img id="photo" alt="The screen capture will appear in this box." class="invisible">
+</div>
+<div class="toolbar">
     <button id="startbutton">Take Photo</button>
-    <video id="video-still">
-    </video>
+</div>
+<div class="toolbar hidden">
+    <button id="retake-photo">Retake</button>
+    <button id="save-photo">Save Photo</button>
 </div>
 <canvas id="canvas"></canvas>
-
-<div class="output">
-  <button id="save-photo">Save Photo</button>
-  <img id="photo" alt="The screen capture will appear in this box.">
-</div>
 
 
 <script type="text/javascript">
@@ -54,6 +103,8 @@ canvas {
     // Set a width and height for the video/image
 
     // $("#video-still").width($("#video-still").width());
+
+    var initialized = false;
 
     var width = 320; // We will scale the photo width to this
     var height = 0; // This will be computed based on the input stream
@@ -71,6 +122,14 @@ canvas {
     var photo = null;
     var startbutton = null;
     var savebutton = null;
+    var retakebutton = null;
+
+    var position = null;
+
+    navigator.geolocation.getCurrentPosition(function(result) {
+      position = result;
+      // do_something(position.coords.latitude, position.coords.longitude);
+    });
 
     // ****************************************************************
     // Start capturing video
@@ -81,11 +140,14 @@ canvas {
         photo = document.getElementById('photo');
         startbutton = document.getElementById('startbutton');
         savebutton = document.getElementById('save-photo');
+        retakebutton = document.getElementById('retake-photo');
+        $overlay = $("img.overlay-photo");
 
 
-        // width = $(video).width();
-        height = video.clientHeight;
-        width = height / ( 3 / 4);
+        width = $(video).width();
+        height = $("img.overlay-photo").height();
+        // height = video.clientHeight;
+        // width = height / ( 3 / 4);
 
         // Check for vendor version of getUserMedia
 
@@ -131,24 +193,25 @@ canvas {
             if (!streaming) {
                 // Not streaming.
                 // Get the height of the video
-                // height = video.videoHeight / (video.videoWidth / width);
+                ratio = 
+                height = video.videoHeight / (video.videoWidth / width);
 
                 // Firefox currently has a bug where the height can't be read from
                 // the video, so we will make assumptions if this happens.
 
-                // if (isNaN(height)) {
-                //     height = width / (4 / 3);
-                // }
+                if (isNaN(height)) {
+                    height = width / (4 / 3);
+                }
 
-               //  height = width / ( 4 / 3);
                 // Set some attributes of the #video-still element
                 video.setAttribute('width', width);
                 video.setAttribute('height', height);
 
                 // canvas.setAttribute('width', width);
                 // canvas.setAttribute('height', height);
+                var ratio = 2048 / video.videoWidth;
                 canvas.setAttribute('width', 2048);
-                canvas.setAttribute('height', 2048 / ( 4 / 3));
+                canvas.setAttribute('height', video.videoHeight * ratio);
 
                 // Set streaming to true
                 streaming = true;
@@ -166,14 +229,22 @@ canvas {
             var dataURL = canvas.toDataURL();
             $.ajax({
                 type: 'POST',
-                url: '/bicentennial-camera/index.php/upload',
+                url: location.pathname.replace('/camera/', '/upload/'),
                 data: {
-                    imgBase64: dataURL
+                    imgBase64: dataURL,
+                    loc_long: position.coords.longitude,
+                    loc_lat: position.coords.latitude
                 }
             }).done(function(o) {
-                console.log('SAVED');
+                console.log('SAVED', o);
+                window.location.href = o;
             });
         }, false);
+
+        retakebutton.addEventListener('click', function(event) {
+            event.preventDefault();
+            clearphoto();
+        })
 
         clearphoto();
     }
@@ -189,8 +260,15 @@ canvas {
         context.fillStyle = "#AAA";
         context.fillRect(0, 0, canvas.width, canvas.height);
         // Set the data url of #photo to the image on the canvas
-        var data = canvas.toDataURL('image/png');
+        var data = canvas.toDataURL('image/jpg');
         photo.setAttribute('src', data);
+        if ( initialized ) {
+            $(".toolbar").toggleClass('hidden');
+            $(photo).toggleClass('invisible');
+            $(video).toggleClass('invisible');        
+        } else {
+            initialized  = true;
+        }
     }
 
     // Capture a photo by fetching the current contents of the video
@@ -208,9 +286,11 @@ canvas {
             // canvas.height = height;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            var data = canvas.toDataURL('image/png');
+            var data = canvas.toDataURL('image/jpg');
             photo.setAttribute('src', data);
-            $(".output").css('visibility', 'visible');
+            $(photo).toggleClass('invisible');
+            $(video).toggleClass('invisible');
+            $(".toolbar").toggleClass("hidden");
         } else {
             clearphoto();
         }

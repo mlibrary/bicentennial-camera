@@ -14,7 +14,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/photo/{id}', function(Silex\Application $app, $id)  {
 
-    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat");
+    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat FROM bc_historical_item" );
     $stories = $app['db']->fetchAll("SELECT id, image_filename, description, date_added FROM bc_story_item WHERE historical_item_id = ?", array($photo['id']));
 
     /*
@@ -58,8 +58,12 @@ $app->get('/', function(Silex\Application $app)  {
 
 
 // totally hacking
-$app->get('/camera', function() use ($app) {
-    return $app['twig']->render('camera/form.twig');
+$app->get('/camera/{id}', function($id) use ($app) {
+    $photo = $app['db']->fetchAssoc("SELECT id, title, image_href, record_href, loc_long, loc_lat FROM bc_historical_item");
+
+    return $app['twig']->render('camera/form.twig', array(
+        'photo' => $photo
+    ));
     /*
       Creates a story with image and text associated with a historical image
 
@@ -71,7 +75,7 @@ $app->get('/camera', function() use ($app) {
     */
 });
 
-$app->post('/upload', 'App\Controller\UploadController::saveAction');
+$app->post('/upload/{id}', 'App\Controller\UploadController::saveAction');
 
 $app['debug'] = true;
 
