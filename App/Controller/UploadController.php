@@ -20,12 +20,12 @@ class UploadController {
 
         file_put_contents($app['__ROOT__'] . '/files/' . $image_filename, $data);
 
-        $app['db']->executeQuery("INSERT INTO bc_story_item ( image_filename, description, loc_lat, loc_long, historical_item_id ) VALUES ( ?, ?, ?, ?, ? )", 
+        $app['db']->executeQuery("INSERT INTO bc_story_item ( image_filename, description, loc_lat, loc_long, historical_item_id, date_added ) VALUES ( ?, ?, ?, ?, ?, NOW() )", 
                 array($image_filename, $description, $loc_lat, $loc_long, $id));
 
-        $story_id = $app['db']->getId();
+        $story_id = $app['db']->lastInsertId();
 
-        return "https://{$_SERVER['HTTP_HOST']}/bicentennial_camera/photo/{$id}";
+        return "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}/bicentennial-camera/index.php/photo/{$id}";
     }
 
 }
